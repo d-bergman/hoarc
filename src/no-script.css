@@ -1,0 +1,5 @@
+@media (max-width: 991.98px) {
+  .site-header { position: static !important; }
+  .navbar-toggler { display: none; }
+  .navbar-collapse.collapse { display: block; }
+}

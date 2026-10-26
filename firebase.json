@@ -1,0 +1,28 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "trailingSlash": true,
+    "rewrites": [{ "source": "/api/contact/**", "function": { "functionId": "contact", "region": "us-central1" } }],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-cache" },
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+          { "key": "X-Frame-Options", "value": "DENY" },
+          { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+          { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebasedatabase.app wss://*.firebasedatabase.app https://*.cloudfunctions.net; frame-src https://hoarc-a5afd.firebaseapp.com; upgrade-insecure-requests" }
+        ]
+      },
+      { "source": "/admin{,/**}", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }, { "key": "Cache-Control", "value": "no-store" }] },
+      { "source": "**/*.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/assets/images/**", "headers": [{ "key": "Cache-Control", "value": "public,max-age=86400" }] }
+    ]
+  },
+  "database": { "rules": "database.rules.json" },
+  "functions": [{ "source": "functions", "codebase": "default", "ignore": ["node_modules", "*.local", ".secret.local", ".env*", "*.log"] }],
+  "emulators": { "database": { "host": "127.0.0.1", "port": 9000 }, "auth": { "host": "127.0.0.1", "port": 9099 }, "functions": { "host": "127.0.0.1", "port": 5001 }, "hosting": { "host": "127.0.0.1", "port": 5000 }, "ui": { "enabled": false }, "singleProjectMode": true }
+}

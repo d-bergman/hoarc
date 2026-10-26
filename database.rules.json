@@ -1,0 +1,12 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "announcementState": {
+      "records": { ".read": "auth != null && auth.token.admin === true" },
+      "audit": { ".read": "auth != null && auth.token.admin === true" },
+      "published": { ".read": true }
+    },
+    "contactRateLimits": { ".indexOn": ["expiresAt"] }
+  }
+}

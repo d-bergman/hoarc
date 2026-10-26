@@ -1,0 +1,87 @@
+{
+  "about-hero": {
+    "width": 1920,
+    "height": 768,
+    "src": "/assets/images/about-hero.webp"
+  },
+  "contact-hero": {
+    "width": 1920,
+    "height": 720,
+    "src": "/assets/images/contact-hero.webp"
+  },
+  "faq-hero": {
+    "width": 1920,
+    "height": 720,
+    "src": "/assets/images/faq-hero.webp"
+  },
+  "homepage-hero": {
+    "width": 1916,
+    "height": 821,
+    "src": "/assets/images/homepage-hero.webp"
+  },
+  "resources-hero": {
+    "width": 1920,
+    "height": 720,
+    "src": "/assets/images/resources-hero.webp"
+  },
+  "service-hero": {
+    "width": 1920,
+    "height": 768,
+    "src": "/assets/images/service-hero.webp"
+  },
+  "bhumika-portrait": {
+    "width": 720,
+    "height": 720,
+    "src": "/assets/images/bhumika-portrait.webp"
+  },
+  "darren-portrait": {
+    "width": 720,
+    "height": 480,
+    "src": "/assets/images/darren-portrait.webp"
+  },
+  "donna-portrait": {
+    "width": 720,
+    "height": 900,
+    "src": "/assets/images/donna-portrait.webp"
+  },
+  "larry-portrait": {
+    "width": 348,
+    "height": 435,
+    "src": "/assets/images/larry-portrait.webp"
+  },
+  "sheree-portrait": {
+    "width": 720,
+    "height": 722,
+    "src": "/assets/images/sheree-portrait.webp"
+  },
+  "breakthrough-journal": {
+    "width": 600,
+    "height": 776,
+    "src": "/assets/images/breakthrough-journal.webp"
+  },
+  "healingofamerica-revival": {
+    "width": 600,
+    "height": 927,
+    "src": "/assets/images/healingofamerica-revival.webp"
+  },
+  "start-at-start": {
+    "width": 600,
+    "height": 901,
+    "src": "/assets/images/start-at-start.webp"
+  },
+  "transformation-guide": {
+    "width": 600,
+    "height": 776,
+    "src": "/assets/images/transformation-guide.webp"
+  },
+  "hoarc-favicon": {
+    "width": 878,
+    "height": 1224,
+    "src": "/assets/images/hoarc-favicon.webp"
+  },
+  "hoarc-horizontal-main": {
+    "width": 1000,
+    "height": 283,
+    "src": "/assets/images/hoarc-horizontal-main.webp"
+  }
+}
