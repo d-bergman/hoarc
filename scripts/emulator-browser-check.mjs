@@ -19,7 +19,7 @@ try {
   const hosted = await browser.newPage();
   const cspErrors = []; hosted.on('pageerror', error => cspErrors.push(error.message));
   hosted.on('console', msg => { if (msg.type() === 'error' && /Content Security Policy/.test(msg.text())) cspErrors.push(msg.text()); });
-  const hostedResponse = await hosted.goto('http://127.0.0.1:5000/about/');
+  const hostedResponse = await hosted.goto('http://127.0.0.1:5000/about.html');
   report.hostingHeadersApplied = !!hostedResponse.headers()['content-security-policy'];
   await hosted.locator('[data-bio-trigger="donna"]').click();
   await hosted.locator('#bio-donna.show').waitFor();
@@ -28,14 +28,14 @@ try {
   await hosted.close();
   report.tests.push('Firebase Hosting emulator serves the staging page with working modal scripts. Custom-header verification remains a deployed check on Windows.');
   const settings = JSON.parse(await readFile('site.settings.json', 'utf8'));
-  await writeFile(settingsPath, JSON.stringify({ ...settings, publicLaunch: false, contactEnabled: true, announcementsEnabled: true, emulators: true }));
+  await writeFile(settingsPath, JSON.stringify({ ...settings, contactEnabled: true, announcementsEnabled: true, emulators: true }));
   execFileSync(process.execPath, ['scripts/build.mjs'], { env: { ...process.env, HOARC_SETTINGS: settingsPath }, stdio: 'inherit' });
   const email = `browser-admin-${Date.now()}@example.com`; const password = 'Emulator-Only-Password!';
   const user = await auth.createUser({ email, password }); await auth.setCustomUserClaims(user.uid, { admin: true });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
   const page = await context.newPage();
   const errors = []; page.on('pageerror', e => errors.push(e.message));
-  await page.goto('http://127.0.0.1:4173/admin/');
+  await page.goto('http://127.0.0.1:4174/admin.html');
   await page.locator('#admin-email').fill(email); await page.locator('#admin-password').fill(password);
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
   await page.locator('#admin-workspace').waitFor({ state: 'visible' });
@@ -57,7 +57,7 @@ try {
   assert.deepEqual(audit.violations.map(v => v.id), []);
   await page.screenshot({ path: 'artifacts/screenshots/admin-signed-in.png', fullPage: true });
   const visitor = await browser.newContext(); const home = await visitor.newPage();
-  await home.goto('http://127.0.0.1:4173/');
+  await home.goto('http://127.0.0.1:4174/');
   await home.locator('#announcements').waitFor({ state: 'visible' });
   assert.ok((await home.locator('[data-announcements]').textContent()).includes('Sunday entrance update'));
   assert.equal(await home.locator('[data-announcements] script').count(), 0);
@@ -68,7 +68,7 @@ try {
   await home.waitForFunction(() => !document.querySelector('[data-announcements]').textContent.includes('Sunday entrance update'), { timeout: 7000 });
   report.tests.push('Anonymous RTDB feed updates live, escapes HTML, and removes expired notices without rebuilding.');
   const contact = await visitor.newPage();
-  await contact.goto('http://127.0.0.1:4173/contact/');
+  await contact.goto('http://127.0.0.1:4174/contact.html');
   const formAudit = await new AxeBuilder({ page: contact }).withTags(['wcag2a', 'wcag2aa', 'wcag22aa']).analyze();
   assert.deepEqual(formAudit.violations.map(v => v.id), []);
   let submitted;

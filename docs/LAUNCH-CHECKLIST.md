@@ -24,7 +24,7 @@ As of October 22, 2026, the website is built locally for review. The original pl
 - Set authenticated SMTP secrets and exact allowed origins. Configure sender-domain SPF/DKIM/DMARC if applicable to the chosen service.
 - Test real contact receipt in `hoarc.church@gmail.com`, spam folder behavior, Gmail Reply-To, and an actual reply round trip. Test unavailable mail service and submit error behavior before enabling the public form.
 - Enable announcements/contact switches only after those checks; rebuild.
-- Set the approved HTTPS domain and indexability; inspect canonical/social metadata and schema on the resulting public URLs.
+- Update the static HTML metadata, canonical/social URLs, schema, robots.txt and sitemap.xml for the approved HTTPS domain; inspect the resulting public URLs.
 - Verify supplied social/Amazon/PayPal destinations and the PayPal recipient before launch.
 - Validate with NVDA + Chrome and VoiceOver + Safari. Test actual Android and iOS devices, text enlargement, reduced motion, touch targets, keyboard focus, and sticky-header offsets. Automated checks are not a substitute for these.
 - Measure mobile Core Web Vitals on deployed Hosting; check HTTPS/security headers and CSP with actual Firebase services.

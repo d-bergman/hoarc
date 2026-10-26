@@ -12,7 +12,7 @@ try {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  for (const route of ['/', '/service/', '/about/', '/resources/', '/contact/', '/faq/', '/privacy/', '/accessibility/', '/admin/']) {
+  for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/contact.html', '/faq.html', '/privacy.html', '/accessibility.html', '/admin.html']) {
     const response = await page.goto(`${base}${route}`);
     assert.equal(response.status(), 200);
     await page.waitForLoadState('networkidle');
@@ -21,26 +21,26 @@ try {
     assert.equal(await page.locator('h1').count(), 1);
     await page.screenshot({ path: `artifacts/screenshots/${route.replace(/\//g, '') || 'home'}-desktop.png`, fullPage: true });
   }
-  await page.goto(`${base}/about/`);
+  await page.goto(`${base}/about.html`);
   for (const name of ['larry', 'donna', 'sheree', 'darren', 'bhumika']) {
     const trigger = page.locator(`[data-bio-trigger="${name}"]`);
     await trigger.click();
     await page.locator(`#bio-${name}.show`).waitFor();
     assert.equal(await page.locator(`#bio-${name}`).getAttribute('aria-modal'), 'true');
     const modalAxe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag22aa']).analyze();
-    report.pages.push({ route: `/about/#bio-${name}`, viewport: 'desktop-modal', violations: modalAxe.violations.map(v => ({ id: v.id, impact: v.impact, nodes: v.nodes.map(n => ({ target: n.target, summary: n.failureSummary })) })) });
+    report.pages.push({ route: `/about.html#bio-${name}`, viewport: 'desktop-modal', violations: modalAxe.violations.map(v => ({ id: v.id, impact: v.impact, nodes: v.nodes.map(n => ({ target: n.target, summary: n.failureSummary })) })) });
     await page.keyboard.press('Escape');
     await page.locator(`#bio-${name}`).waitFor({ state: 'hidden' });
     assert.equal(await trigger.evaluate(el => el === document.activeElement), true, 'Modal focus returns to the opener');
   }
   report.interactions.push('All five biography modals open, close with Escape, and restore focus.');
-  await page.goto(`${base}/faq/`);
+  await page.goto(`${base}/faq.html`);
   const summary = page.locator('details').nth(1).locator('summary');
   await summary.focus(); await page.keyboard.press('Enter');
   assert.equal(await page.locator('details').nth(1).getAttribute('open'), '');
   report.interactions.push('FAQ works with the keyboard.');
   await page.setViewportSize({ width: 320, height: 740 });
-  for (const route of ['/', '/service/', '/about/', '/resources/', '/contact/', '/faq/', '/admin/']) {
+  for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/contact.html', '/faq.html', '/admin.html']) {
     await page.goto(`${base}${route}`);
     await page.waitForLoadState('networkidle');
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
@@ -56,7 +56,7 @@ try {
   await page.waitForFunction(() => document.querySelector('.navbar-toggler').getAttribute('aria-expanded') === 'false');
   assert.equal(await page.getByRole('button', { name: 'Toggle navigation' }).getAttribute('aria-expanded'), 'false');
   report.interactions.push('Mobile menu toggles and Escape closes it with focus restoration.');
-  await page.goto(`${base}/about/`);
+  await page.goto(`${base}/about.html`);
   await page.locator('[data-bio-trigger="bhumika"]').click();
   await page.locator('#bio-bhumika.show').waitFor();
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
@@ -64,11 +64,11 @@ try {
   await page.keyboard.press('Escape');
   const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   const fallback = await noJs.newPage();
-  await fallback.goto(`${base}/about/`);
+  await fallback.goto(`${base}/about.html`);
   await fallback.locator('[data-bio-trigger="darren"]').click();
-  assert.ok(fallback.url().endsWith('/about/darren/'));
+  assert.ok(fallback.url().endsWith('/about/darren.html'));
   assert.ok((await fallback.locator('main').textContent()).includes('Above all, Darren desires'));
-  await fallback.goto(`${base}/faq/`);
+  await fallback.goto(`${base}/faq.html`);
   await fallback.locator('summary').nth(1).click();
   assert.equal(await fallback.locator('details').nth(1).getAttribute('open'), '');
   report.interactions.push('Without JavaScript: biography links and FAQ answers remain usable.');

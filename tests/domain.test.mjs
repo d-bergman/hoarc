@@ -26,7 +26,7 @@ test('only enabled and currently published notices enter the public projection',
 test('urgent announcements sort first and arbitrary URL schemes are rejected', () => {
   assert.equal(activeAnnouncements({ normal: record, urgent: { ...record, priority: 'urgent' } }, now)[0].id, 'urgent');
   for (const url of ['javascript:alert(1)', 'data:text/html,x', '//evil.example', '/\\evil.example', 'http://example.com', 'https://user:pass@example.com']) assert.equal(safeActionUrl(url), '');
-  assert.equal(safeActionUrl('/service/'), '/service/');
+  assert.equal(safeActionUrl('/service.html'), '/service.html');
   assert.equal(safeActionUrl('https://example.com/'), 'https://example.com/');
 });
 test('announcement validation rejects oversized, invalid, and unpaired action fields', () => {

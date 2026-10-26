@@ -1,8 +1,5 @@
 {
-  "publicLaunch": false,
-  "siteUrl": "",
   "contactEnabled": false,
   "contactEndpoint": "/api/contact/",
-  "announcementsEnabled": false,
-  "scriptureWidgetEnabled": false
+  "announcementsEnabled": false
 }

@@ -25,7 +25,7 @@ test('emulated functions enforce admin claims, revisions, publication, and safe 
   try {
     const adminToken = await account('admin'); const memberToken = await account('member');
     const now = Date.now();
-    const announcement = { title: 'Integration service update', message: '<script>alert(1)</script> is plain text.', priority: 'urgent', enabled: true, publishAt: now - 1000, expiresAt: now + 60000, actionLabel: 'Visit details', actionUrl: '/service/' };
+    const announcement = { title: 'Integration service update', message: '<script>alert(1)</script> is plain text.', priority: 'urgent', enabled: true, publishAt: now - 1000, expiresAt: now + 60000, actionLabel: 'Visit details', actionUrl: '/service.html' };
     assert.equal((await call({ announcement })).status, 403);
     assert.equal((await call({ announcement }, memberToken)).status, 403);
     const created = await call({ announcement }, adminToken);
@@ -63,7 +63,7 @@ test('emulated functions enforce admin claims, revisions, publication, and safe 
     assert.equal(badOrigin.status, 403);
     const hostingContact = await fetch('http://127.0.0.1:5000/api/contact/', { method: 'POST', redirect: 'manual', headers: { 'Content-Type': 'application/json', Origin: 'http://127.0.0.1:4173' }, body: JSON.stringify({}) });
     assert.equal(hostingContact.status, 503, 'Hosting rewrite preserves contact POST and returns the disabled-service fallback.');
-    const adminPage = await fetch('http://127.0.0.1:5000/admin/');
+    const adminPage = await fetch('http://127.0.0.1:5000/admin.html');
     if (process.platform === 'win32' && !adminPage.headers.get('content-security-policy')) {
       console.log('Windows Hosting emulator custom-header glob matching is unavailable; verify configured headers after deployment.');
     } else {

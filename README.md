@@ -1,116 +1,92 @@
 # Healing of America Revival Center
 
-The church website, built from the supplied version 9 master plan and six visual concepts. The database choice follows Darren’s October 22 instruction: **Firebase Realtime Database (RTDB)**. The original Word plan and design files on `Z:\Church Website` have not been changed.
+This is a conventional static website. **The HTML pages are directly editable files in the repository root.** No template engine, page generator, or build is needed to view or edit the website.
 
-This is a local staging build. Nothing has been deployed to Firebase, no live database rules have been changed, and no real contact email has been sent. Search indexing is disabled by default.
+| Page | File |
+| --- | --- |
+| Home | [index.html](index.html) |
+| Service | [service.html](service.html) |
+| About | [about.html](about.html) |
+| Resources | [resources.html](resources.html) |
+| Contact | [contact.html](contact.html) |
+| FAQ | [faq.html](faq.html) |
+| Announcement administrator | [admin.html](admin.html) |
+| Privacy and accessibility | [privacy.html](privacy.html), [accessibility.html](accessibility.html) |
+| Site map and not found | [sitemap.html](sitemap.html), [404.html](404.html) |
+| Individual biographies | [about/](about/) |
 
-## Preview
+The design follows the supplied church plan and concepts. Firebase **Realtime Database (RTDB)** is the database. The original Word plan and images on the `Z:` drive have not been modified.
 
-Requires Node.js 22 or newer.
+## Edit and preview
+
+Edit page content in the HTML files. Edit the theme in [assets/site.css](assets/site.css). Images are in [assets/images/](assets/images/), and ready-to-serve JavaScript is in `assets/`. Page links and assets use relative paths, so the website also works beneath a static host's subdirectory.
+
+Serve this folder with any static web server, VS Code Live Server, or the included Node server:
 
 ```powershell
 cd 'C:\Users\Darren\Documents\Git Archive\hoarc'
-npm ci
-npm run build
 npm run dev
 ```
 
-Open `http://127.0.0.1:4173`. Keep the terminal running while reviewing. `npm run dev` serves the last build; run `npm run build` after source changes.
+Open `http://127.0.0.1:4173`. **There is no install or build step for previewing the committed website.** Reload after editing HTML/CSS. Use an HTTP server for JavaScript modules rather than opening pages with `file://`.
 
-The optimized supplied images and imported biographies are in this checkout, so normal builds do not require the `Z:` drive. To deliberately regenerate them from the originals:
+Shared navigation and footer markup is present in each HTML page. If changing it, apply the change to all pages, including the biography pages. Full biographies appear in the About modals and their individual pages; keep those copies consistent.
+
+## JavaScript and optional deployment packaging
+
+`assets/site.js`, `assets/admin.js`, and their adjacent dependency chunks are committed so a fresh checkout can serve immediately. Bootstrap remains pinned to 5.3.2. Readable JavaScript module sources live in `src/`; Firebase server functions live separately in `functions/`.
+
+When changing JavaScript sources or the runtime feature switches in `site.settings.json`:
 
 ```powershell
-node scripts/prepare-assets.mjs
+npm ci
+npm run build
 ```
 
-The one-time biography importer is `scripts/extract-plan.py`. It reads the supplied DOCX without modifying it. Do not reimport routinely: that would replace editorial changes in `src/data/people.json`.
+This bundles JavaScript into `assets/` and copies the existing HTML, CSS, images, and scripts into ignored `dist/` for Firebase Hosting. **It never regenerates or overwrites the source HTML or CSS.** Commit updated JavaScript assets with their source changes. Ordinary HTML/CSS edits require only a refresh; run the packaging command before deploying to Firebase.
 
-## Included
+Metadata, canonical/social URLs, robots directives and the sitemap are now editable static files as well. They are deliberately set for staging, with no indexing and no invented final domain. Before launch, update them for the approved domain. `site.settings.json` controls announcements and contact-form availability; it does not rewrite page content or indexing settings.
 
-- Home, Service, About, Resources, Contact, and FAQ, with six-page navigation.
-- White sticky navigation, muted supplied logo, warm ivory backgrounds, burgundy buttons, restrained gold accents, and the supplied hero images.
-- November 29, 2026, 10 a.m. America/Chicago countdown, switching to an evergreen Sunday invitation at the deadline.
-- All five complete supplied biographies in Bootstrap 5.3.2 modals, plus standalone biography pages for JavaScript-disabled access.
-- Four supplied book covers, author names and Amazon links; Polaris Frequency channel card.
-- Private announcement administration at `/admin/`, with preview-before-save, publication dates, expiration, priority, audit records, and stale-edit protection.
-- RTDB rules and server functions; scheduled publication and cleanup.
-- A contact form implementation with validation, consent, private server-side email, authenticated From, visitor Reply-To, rate limiting, and honeypot protection. Direct email/phone fallback is active until delivery is configured.
-- Privacy, accessibility, site map, and not-found pages. Responsive images, fixed image dimensions, lazy loading below the fold, reduced-motion support, and back-to-top links.
-- Per-page metadata, conditional canonicals/social image URLs, structured data, sitemap generation, and staging noindex controls.
+## Firebase
 
-Bootstrap is pinned to **5.3.2**, as required. Fonts use local system stacks and Georgia; there are no downloaded webfonts, stock portraits, external photo requests, analytics, or embedded social feeds.
+Project: `hoarc-a5afd`. The supplied public web configuration is in `src/config.mjs`. No live Firebase deployment or database-rule change has been made by this repository's implementation.
 
-## Editing
+- Enable Email/Password Authentication, create the approved administrator account, and grant its UID the `admin: true` custom claim using trusted Application Default Credentials:
+  ```powershell
+  npm --prefix functions ci
+  node scripts/set-admin.mjs FIREBASE_UID grant
+  ```
+  Use `revoke` to remove the claim. Sign out/in after changing claims; existing ID tokens can remain usable until expiry. Never put an Admin SDK/service account key in the repository.
+- Review/deploy `database.rules.json`, `saveAnnouncement`, and `syncAnnouncements`. Root access stays denied. Only the published projection is public. Draft/audit reads require an administrator claim; all browser writes stay denied, including administrator writes. Validated changes use the protected callable function.
+- The admin page is `admin.html`. It requires preview before saving, supports schedules/unpublishing, and rejects stale edits.
+- RTDB holds private originals at `announcementState/records`, public notices at `announcementState/published`, and the latest 500 private audit events at `announcementState/audit`.
+- Scheduler publication can take up to approximately one minute. The browser hides expired notices within one second using the server-time offset; the scheduler removes expired public records on its next run. Previously published text is not confidential after expiry.
+- There is a cap of 50 stored announcements; trusted operators can archive old records when needed.
+- Functions/Scheduler require their corresponding billing/services. No billing changes have been made.
+- After the real setup is verified, enable `announcementsEnabled` in `site.settings.json` and rebuild JavaScript assets.
 
-| File | Purpose |
-| --- | --- |
-| `src/templates.mjs` | Shared templates and page sections |
-| `src/site.css` | Brand styling and responsive details |
-| `src/data/people.json` | Complete introductions and biographies |
-| `src/data/content.mjs` | Books, faith article headings, FAQs |
-| `src/config.mjs` | Supplied Firebase web config and church details |
-| `site.settings.json` | Launch, domain and feature switches |
-| `functions/index.mjs` | Protected announcement functions and contact backend |
-| `database.rules.json` | RTDB authorization |
+## Contact form
 
-Custom classes use single-hyphen kebab-case. CSS variables retain their required `--` prefix. Primary content is generated into HTML during the build; it does not depend on Firebase loading or visitors opening dialogs.
+The contact form is ordinary HTML in `contact.html`. It is hidden by default while direct email/phone links remain visible. When `contactEnabled` is enabled and JavaScript assets are rebuilt, the form becomes available. Without JavaScript, direct contact links remain usable.
 
-## Firebase setup still needed
+The SMTP provider/sending identity is still to be selected and approved. The included server adapter uses authenticated TLS SMTP, sends only to `hoarc.church@gmail.com`, and sets the visitor's validated email as Reply-To. It does not save a duplicate message in RTDB.
 
-Use project `hoarc-a5afd`; do not create or enable a separate document database.
-
-1. Enable Email/Password in Firebase Authentication. Create the chosen administrator account in the Firebase console. No public registration UI is included.
-2. Grant that UID the `admin: true` custom claim using trusted Admin SDK credentials outside the repository:
-   ```powershell
-   npm --prefix functions ci
-   node scripts/set-admin.mjs FIREBASE_UID grant
-   ```
-   The script uses Application Default Credentials. Never place a service account key in this checkout. Sign out and in again after changing claims. Use `revoke` to remove access; existing ID tokens can remain usable until expiry, so urgent revocation also requires the normal Firebase incident procedure.
-3. Review and deploy the RTDB rules together with `saveAnnouncement` and `syncAnnouncements`. Deploy `contact` and its cleanup function only after the email parameters/secrets are configured. Root reads/writes stay denied. Only the public published projection is readable anonymously. Drafts/audit records require an administrator claim; all browser writes stay denied, including administrator writes. The callable server performs validation and authorization.
-4. Enable the billing/services required by Cloud Functions and Cloud Scheduler before deploying them. Review the one-minute schedule and set appropriate project budget alerts. No billing changes have been made by this implementation.
-5. After deploying functions/rules and verifying the real administrator workflow, set `announcementsEnabled` to `true` and rebuild.
-
-### RTDB layout
-
-```text
-announcementState/
-  records/{id}       private originals, including drafts and future notices
-  published/{id}     public active notices; excludes administrator metadata
-  audit/{id}         private changes, retaining the latest 500 events
-contactRateLimits/
-  {keyedHash}        temporary request counts, no visitor message contents
-```
-
-Server transactions update records, audit and public projection together. The scheduled function recalculates active announcements every minute. A newly scheduled announcement can appear up to approximately one minute after its publication time. The browser hides expired notices within one second using the Firebase server-time offset; the scheduler removes expired public records on its next run. Previously published text is not confidential after expiration. Drafts and future scheduled text are never put in the public projection.
-
-There is a cap of 50 stored announcement records. Old records can be archived by a trusted operator when needed; this first version offers editing and unpublishing rather than irreversible deletion.
-
-### Contact email
-
-The email provider has **not** been chosen. The included Nodemailer adapter supports an approved SMTP service using TLS on port 465 or 587. Confirm the provider, sender identity, quotas, costs, and retention policy before enabling it.
-
-Set these Firebase function parameters/secrets through the Firebase CLI/console, never in browser code:
-
-| Name | Kind | Value |
+| Function setting | Kind | Value |
 | --- | --- | --- |
-| `CONTACT_ENABLED` | Boolean parameter | `false` until delivery is tested |
-| `ALLOWED_ORIGINS` | String parameter | Comma-separated exact approved HTTPS origins |
-| `SMTP_CONFIG` | Secret JSON | `host`, `port`, `user`, `pass`, `from` |
-| `CONTACT_HASH_KEY` | Secret | Long independently generated random value |
+| `CONTACT_ENABLED` | Boolean parameter | Keep false until tested |
+| `ALLOWED_ORIGINS` | String parameter | Exact approved origins, comma separated |
+| `SMTP_CONFIG` | Secret JSON | `host`, `port` (465 or 587), `user`, `pass`, `from` |
+| `CONTACT_HASH_KEY` | Secret | Independently generated random value |
 
-Use an authenticated church-controlled address in `from`. The server always sends to `hoarc.church@gmail.com` and places the visitor’s validated email in Reply-To. It sends plain-text mail and does not save a duplicate contact message in RTDB. Five validated submissions per IP-derived keyed hash per 15 minutes are allowed. Expired counters are removed daily; no raw IP is saved by this application logic. Hosting/function infrastructure can retain its own operational logs.
+Configure these through Firebase, not browser code. Deploy `contact` and its cleanup function after configuration. Firebase Hosting rewrites `/api/contact/` to the function. Other static hosts need an appropriate backend URL/rewrite before the form is enabled.
 
-Hosting rewrites `/api/contact` to the function. Before setting `contactEnabled: true` in `site.settings.json`, send a test through the deployed endpoint, confirm actual receipt and spam handling in Gmail, press Reply and check the visitor’s address, then complete a reply round trip. A successful website response means the sending service accepted the mail; it does not prove inbox placement. If the endpoint is unavailable, the page provides direct email/phone alternatives.
+The backend validates lengths, email and consent, rejects header injection, uses a honeypot and limits five validated submissions per IP-derived keyed hash per 15 minutes. Expired counters are cleaned daily; no raw IP or contact message is stored by this application logic. Infrastructure can keep its own operational logs.
 
-## Launch settings
-
-`site.settings.json` currently has `publicLaunch: false`, an empty final domain, and disabled remote feature switches. This avoids inventing a canonical domain or exposing an unfinished contact form. The default local preview makes no Firebase requests on public pages. Opening `/admin/` does initialize the supplied project’s authentication client; no writes occur without a signed-in authorized administrator and deployed server functions.
-
-When launch is approved, set the actual HTTPS `siteUrl`, finish the items in `docs/LAUNCH-CHECKLIST.md`, set the appropriate feature switches, rebuild and review. `publicLaunch: true` requires an HTTPS domain. Canonical URLs, Open Graph image URLs, WebSite/Organization/page schema, and the XML sitemap are generated from that domain. Admin pages remain noindex. An emulator build cannot be marked public.
-
-Firebase Hosting configuration is prepared in `firebase.json`; deployment has not been performed. Use explicit deploy targets when ready. Deploying rules/functions affects the live project and should follow the completed review.
+Verify a real test reaches the church Gmail inbox, check spam handling, click Reply and confirm the visitor's address, and complete a reply round trip. A successful form response means the sending service accepted the mail; inbox placement remains a separate check.
 
 ## Checks
+
+Developer tooling requires Node 22+ and `npm ci`:
 
 ```powershell
 npm run check
@@ -118,14 +94,14 @@ npx playwright install chromium webkit
 npm run dev
 ```
 
-In a second terminal:
+With the preview server running:
 
 ```powershell
 npm run test:browser
-node scripts/cross-browser-check.mjs
+npm run test:cross-browser
 ```
 
-The rules and full emulator checks require Java 21+ and the function dependencies:
+With Java 21+ and function dependencies installed:
 
 ```powershell
 npm --prefix functions ci
@@ -133,10 +109,6 @@ npm run test:rules
 npm run test:integration
 ```
 
-`test:integration` creates only ignored emulator configuration with dummy secrets, runs with the `demo-hoarc` project, and restores the standard staging build afterwards. No live Firebase records or real email are used. Keep the local preview server running for the browser portion. See `docs/VERIFICATION.md` for the checks actually completed and their limits.
+Integration checks launch their own disposable preview on port 4174 and use the isolated `demo-hoarc` Firebase emulators. Test feature switches affect only ignored `dist/`; committed HTML and runtime assets stay unchanged. No real email is sent.
 
-## Content awaiting confirmation
-
-The supplied plan explicitly leaves rights and editorial approvals open. Portraits, hero images and book covers are included for local review; their presence is not a permission record. Exact venue entrance/room and accessible route still need confirmation. The public library’s venue photo and Google Maps screenshots have not been copied. Directions use the official Maps URL instead.
-
-The About page lists the 13 faith article headings and links to the official full statement; it does not silently rewrite doctrine or republish the full external text before approval. The Scripture section links to the official daily verse and the featured Zephaniah passage; exact CEV quotations and the daily embed remain pending translation/widget permission review. Book descriptions remain omitted until the authors approve the wording. See the launch checklist and asset register.
+See [verification](docs/VERIFICATION.md), [launch checklist](docs/LAUNCH-CHECKLIST.md), and [asset register](docs/ASSET-REGISTER.md) for results, remaining approvals, and live-service limits. Portrait/cover rights, exact venue access, full doctrinal-text transfer and Scripture widget permissions remain launch decisions. Official external links are used where approval is still pending.

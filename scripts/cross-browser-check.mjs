@@ -11,13 +11,13 @@ for (const [name, engine] of [['Chromium', chromium], ['WebKit', webkit]]) {
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     for (const width of [320, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      for (const route of ['/', '/service/', '/about/', '/resources/', '/contact/', '/faq/']) {
+      for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/contact.html', '/faq.html']) {
         await page.goto(`http://127.0.0.1:4173${route}`);
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${name} ${route}: ${width}px overflow`);
       }
     }
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('http://127.0.0.1:4173/about/');
+    await page.goto('http://127.0.0.1:4173/about.html');
     await page.locator('[data-bio-trigger="larry"]').click();
     await page.locator('#bio-larry.show').waitFor();
     const modal = page.locator('#bio-larry');
@@ -27,7 +27,7 @@ for (const [name, engine] of [['Chromium', chromium], ['WebKit', webkit]]) {
     await page.waitForFunction(() => document.querySelector('#bio-larry .modal-body').scrollTop > 0);
     await modal.getByRole('button', { name: 'Close', exact: true }).click();
     await modal.waitFor({ state: 'hidden' });
-    await page.goto('http://127.0.0.1:4173/faq/');
+    await page.goto('http://127.0.0.1:4173/faq.html');
     await page.locator('summary').nth(2).click();
     assert.equal(await page.locator('details').nth(2).getAttribute('open'), '');
     // A 320px CSS viewport verifies reflow equivalent to a 1280px viewport at 400% browser zoom.

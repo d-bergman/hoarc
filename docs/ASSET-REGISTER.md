@@ -24,6 +24,6 @@ All listed image files were supplied in `Z:\Church Website`. Copies were resized
 
 The six full-page mockups are visual references, not images embedded in the website. Their example portraits, venue photographs, map screenshots, and sample verse quotations were not extracted for publication.
 
-The location panel, small SVG line icons and Polaris Frequency visual are implemented in original HTML/CSS/SVG. The social image combines only supplied logo/hero assets. System fonts require no webfont redistribution. Bootstrap 5.3.2 is MIT licensed; its license is retained in `public/licenses/bootstrap.txt` and copied to the built site. Firebase and other dependency notices remain with their packages/bundles.
+The location panel, small SVG line icons and Polaris Frequency visual are implemented in original HTML/CSS/SVG. The social image combines only supplied logo/hero assets. System fonts require no webfont redistribution. Bootstrap 5.3.2 is MIT licensed; its license is retained in `assets/licenses/bootstrap.txt` and copied to the built site. Firebase and other dependency notices remain with their packages/bundles.
 
 Record the actual rights-holder, permission/license evidence, permitted uses, attribution, and approval date before publishing. No author-approved book descriptions or full external doctrinal text have been invented.

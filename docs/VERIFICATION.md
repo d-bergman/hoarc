@@ -1,3 +1,5 @@
+> October 26 update: the site now uses directly editable root HTML files and tracked assets. The page generator was removed; packaging checks also verify source HTML is copied byte-for-byte. Browser and integration checks are rerun for the explicit .html routes.
+
 # Verification record
 
 Local verification performed October 22, 2026. The Firebase emulators used the isolated `demo-hoarc` project; the live `hoarc-a5afd` project was not mutated.
@@ -6,7 +8,7 @@ Local verification performed October 22, 2026. The Firebase emulators used the i
 
 | Check | Result |
 | --- | --- |
-| `npm run check` | Pass: six domain tests, production build, 16 generated HTML pages, unique IDs, local link/image targets, complete biography preservation, database SDK bundle checks |
+| `npm run check` | Pass: six domain tests, packaging of 16 editable HTML pages without source changes, unique IDs, local link/image targets, complete biography preservation, database SDK bundle checks |
 | `npm run test:rules` with Java 21 | Pass: anonymous published reads; denied root/private reads; admin-only draft/audit reads; denied client writes for visitors, ordinary accounts and administrators |
 | `npm run test:browser` | Pass: 21 Chromium page/viewport/modal WCAG A/AA scans with no automated findings and no uncaught JavaScript errors |
 | `npm run test:cross-browser` | Pass: Chromium and WebKit, all six primary pages at 320/390/768/1024/1440 CSS px, touch FAQ, modal scrolling, enlarged text |

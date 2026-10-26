@@ -43,6 +43,11 @@ new ResizeObserver(() => document.documentElement.style.scrollPaddingTop = `${he
 
 if (settings.announcementsEnabled && document.querySelector('[data-announcements]')) import('./announcements.mjs').then(({ watchAnnouncements }) => watchAnnouncements()).catch(() => {});
 const form = document.querySelector('#contact-form');
+if (form) {
+  form.hidden = !settings.contactEnabled;
+  const fallback = document.querySelector('[data-contact-fallback]');
+  if (fallback) fallback.hidden = settings.contactEnabled;
+}
 if (form) form.addEventListener('submit', async event => {
   event.preventDefault();
   if (!form.reportValidity()) return;

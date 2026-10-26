@@ -11,11 +11,11 @@ cd 'C:\Users\Darren\Documents\Git Archive\hoarc'
 npm run dev
 ```
 
-Open `http://127.0.0.1:4173`. A built `dist` directory already exists locally. On another checkout, first run `npm ci` and `npm run build`.
+Open `http://127.0.0.1:4173`. The server now serves the tracked root HTML and assets directly. A fresh checkout needs no install or build to preview. The optional `npm run build` only bundles JavaScript and copies source files into `dist/` for Firebase Hosting.
 
 Start with Home, then About to review the actual portraits and full biographies. Resources contains all four books and the Polaris Frequency channel. Service and Contact use the plan’s `2 S Main St` address, not the inconsistent Contact mockup address.
 
-The browser-tested RTDB admin is at `/admin/`, but the real administrator account/custom claim and server deployment are still to be configured. Tests used local Firebase emulators and dummy accounts only.
+The browser-tested RTDB admin is at `admin.html`, but the real administrator account/custom claim and server deployment are still to be configured. Tests used local Firebase emulators and dummy accounts only.
 
 ## Decisions for the next session
 
