@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1 — October 28, 2026
+
+- Applied the V2 footer layout across all 17 pages and moved invitations directly above the footer.
+- Extended both mountain layers across the full invitation width and set navbar logo height to 100% at all breakpoints.
+- Used the supplied new Services hero image from the NAS, with responsive optimized copies.
+- Fixed empty daily CEV responses by trying the current NIV verse, accurately labeling its translation and updating the read link. Added daily cache separation, hourly revalidation, and regression coverage for rollover, empty responses and stale dates.
+
 ## 0.3.0 — October 27, 2026
 
 - Replaced the horizontal logo with the supplied October 27 image and refreshed the social artwork.

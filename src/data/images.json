@@ -83,5 +83,10 @@
     "width": 1200,
     "height": 324,
     "src": "/assets/images/hoarc-horizontal-main.webp"
+  },
+  "services-hero-new": {
+    "width": 1920,
+    "height": 768,
+    "src": "/assets/images/services-hero-new.webp"
   }
 }

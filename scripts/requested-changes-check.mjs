@@ -29,7 +29,7 @@ try {
     await page.goto(`http://127.0.0.1:4173/${file}`); assert.equal(await page.locator('.invitation').count(), 0);
   }
   for (const file of ['index.html', 'service.html', 'contact.html']) {
-    await page.goto(`http://127.0.0.1:4173/${file}`); assert.equal(await page.locator('main .invitation').count(), 0); assert.equal(await page.locator('footer .invitation').count(), 1);
+    await page.goto(`http://127.0.0.1:4173/${file}`); assert.equal(await page.locator('main .invitation').count(), 0); assert.equal(await page.locator('footer .invitation').count(), 0); assert.equal(await page.locator('section.invitation + footer.site-footer').count(), 1);
   }
   await page.goto('http://127.0.0.1:4173/faq.html');
   await page.locator('details').filter({ has: page.getByText('Is parking available?', { exact: true }) }).locator('summary').click();
@@ -65,7 +65,7 @@ try {
     const day = await versePage.evaluate(() => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago' }).format(new Date()));
     const [year, month, date] = day.split('-');
     const fixture = { votd: { content: `Daily text ${date}.`, reference: 'Psalm 1:1', display_ref: 'Psalm 1:1', version_id: 'CEV', year, month, day: date, copyright: '' } };
-    await route.fulfill({ status: 200, contentType: 'application/javascript', body: `hoarcDailyVerse(${JSON.stringify(fixture)});` });
+    await route.fulfill({ status: 200, contentType: 'application/javascript', body: `${new URL(route.request().url()).searchParams.get('callback')}(${JSON.stringify(fixture)});` });
   });
   await versePage.goto('http://127.0.0.1:4173/');
   await versePage.waitForFunction(() => document.querySelector('.daily-scripture-text')?.textContent === 'Daily text 27.');
@@ -76,13 +76,41 @@ try {
   await versePage.waitForFunction(() => document.querySelector('.daily-scripture-text')?.textContent === 'Daily text 28.');
   assert.equal(calls, 2, 'Same-day verse is cached locally.');
   await daily.close();
+  // Regression: the real provider can return an empty CEV callback for a date.
+  const emptyCev = await browser.newContext(); const recovered = await emptyCev.newPage();
+  await recovered.clock.install({ time: new Date('2026-10-28T18:00:00Z') });
+  const versions = [];
+  await recovered.route('https://www.biblegateway.com/votd/get/**', async route => {
+    const query = new URL(route.request().url()).searchParams;
+    versions.push(query.get('version'));
+    const payload = query.get('version') === 'CEV' ? '' : JSON.stringify({ votd: { content: 'Current-day fallback verse.', reference: '1 Peter 1:24-25', version_id: 'NIV', year: '2026', month: '10', day: '28' } });
+    await route.fulfill({ contentType: 'application/javascript', body: `${query.get('callback')}(${payload});` });
+  });
+  await recovered.goto('http://127.0.0.1:4173/');
+  await recovered.waitForFunction(() => document.querySelector('.daily-scripture-text')?.textContent === 'Current-day fallback verse.');
+  assert.deepEqual(versions, ['CEV', 'NIV']);
+  assert.match(await recovered.locator('.daily-scripture cite').textContent(), /NIV$/);
+  assert.match(await recovered.locator('[data-scripture-read]').getAttribute('href'), /version=NIV$/);
+  await emptyCev.close();
+  // A provider's previous-day verse must never be presented as today's.
+  const staleContext = await browser.newContext(); const stale = await staleContext.newPage();
+  await stale.clock.install({ time: new Date('2026-10-28T18:00:00Z') });
+  await stale.route('https://www.biblegateway.com/votd/get/**', async route => {
+    const query = new URL(route.request().url()).searchParams;
+    const payload = { votd: { content: 'Yesterday only.', reference: 'Psalm 1:1', version_id: query.get('version'), year: '2026', month: '10', day: '27' } };
+    await route.fulfill({ contentType: 'application/javascript', body: `${query.get('callback')}(${JSON.stringify(payload)});` });
+  });
+  await stale.goto('http://127.0.0.1:4173/');
+  await stale.waitForFunction(() => document.querySelector('[data-scripture-widget]').textContent.includes('available through'));
+  assert.equal(await stale.locator('.daily-scripture').count(), 0);
+  await staleContext.close();
   const offline = await browser.newContext(); const fallback = await offline.newPage();
   await fallback.route('https://www.biblegateway.com/votd/get/**', route => route.abort());
   await fallback.goto('http://127.0.0.1:4173/');
   await fallback.waitForFunction(() => document.querySelector('[data-scripture-widget]').textContent.includes('available through'));
   assert.equal(await fallback.getByRole('link', { name: /Read today’s verse/ }).isVisible(), true);
   await offline.close();
-  report.checks.push('Daily verse provider fixture: daily rollover at Central midnight, same-day caching, and provider failure fallback. No fixture is saved in site content.');
+  report.checks.push('Daily verse: Central midnight rollover, same-day cache, empty CEV to labeled NIV recovery, stale-date rejection, and provider failure fallback.');
   for (const file of files) {
     const html = await readFile(file, 'utf8'); assert.ok(!/November 29|a\.m\.|p\.m\./.test(html), `${file}: no stale dates/time punctuation`);
   }

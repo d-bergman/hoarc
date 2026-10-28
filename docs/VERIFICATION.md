@@ -1,3 +1,5 @@
+> October 28 V2 update: all 17 pages use the revised footer, invitations precede it, and Services uses the supplied new hero. Daily Scripture recovers from empty CEV responses with a labeled NIV verse. Static/unit, accessibility/browser, requested-change regression and Chromium/WebKit checks passed, including an unmocked current-day verse check. See [V2 changes](OCTOBER-28-CHANGES.md).
+
 > October 27 update: 17 editable HTML pages now include the local Statement of Faith. The daily CEV endpoint was verified live; requested-change checks cover global footer/font controls, Central-midnight refresh, caching and provider failure. The service deadline is December 6 at 10 am Central.
 
 > October 26 update: the site now uses directly editable root HTML files and tracked assets. The page generator was removed; packaging checks also verify source HTML is copied byte-for-byte. Browser and integration checks are rerun for the explicit .html routes.

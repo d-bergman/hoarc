@@ -28,4 +28,6 @@ The location panel, small SVG line icons and Polaris Frequency visual are implem
 
 Record the actual rights-holder, permission/license evidence, permitted uses, attribution, and approval date before publishing. No author-approved book descriptions or full external doctrinal text have been invented.
 
+October 28 update: Services uses optimized responsive copies of the owner-supplied `Hero Images/services-hero-new.png` on the NAS. Invitation mountain layers now extend across the full background. Daily Scripture prefers CEV and uses a labeled NIV fallback when necessary.
+
 October 27 update: the owner supplied and requested the replacement horizontal logo; its original PNG is retained in assets/images and its WebP/social derivatives were refreshed. Original vector mountain silhouettes were added for the footer. Noto fonts were downloaded through Google Fonts and their exact font license notices retained. The Statement of Faith text was imported from the official ministry page at the owner’s explicit request. Daily Scripture is delivered by Bible Gateway’s official CEV endpoint with provider attribution.
