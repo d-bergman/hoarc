@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — October 27, 2026
+
+- Replaced the horizontal logo with the supplied October 27 image and refreshed the social artwork.
+- Applied the Website Changes document sitewide: larger navigation/eyebrows, accessible hover/focus borders, simpler full-size footer text, gold social icons and utility separators, dynamic copyright year, and a circular scrolling back-to-top control.
+- Self-hosted Noto Sans and Noto Serif with their SIL Open Font License notices.
+- Moved the first service and countdown to December 6, 2026 at 10 am Central and standardized service times to 10 am – 12 pm.
+- Removed invitation sections from About, Resources and FAQ; integrated the remaining invitations into the footer with a subtle mountain background.
+- Added live daily CEV Scripture through Bible Gateway’s official endpoint, with attribution, Central-time daily refresh, same-day caching and an external-link fallback.
+- Added the complete local Statement of Faith, including vision and wholistic-health sections, linked only from About, and applied the requested FAQ answers.
+
 ## 0.2.0 — October 26, 2026
 
 - Replaced generated page templates with 16 tracked, formatted HTML source files, including all six primary pages in the repository root.

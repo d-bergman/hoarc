@@ -2,9 +2,18 @@ import Collapse from 'bootstrap/js/dist/collapse.js';
 import 'bootstrap/js/dist/modal.js';
 import { siteConfig } from './config.mjs';
 import { countdownParts, launchPassed } from './lib/countdown.mjs';
+import { startDailyScripture } from './scripture.mjs';
 
 const settings = __SITE_SETTINGS__;
 document.querySelectorAll('[data-current-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
+const backToTop = document.querySelector('[data-back-to-top]');
+if (backToTop) {
+  const updateBackToTop = () => { backToTop.hidden = window.scrollY <= 0; };
+  window.addEventListener('scroll', updateBackToTop, { passive: true });
+  updateBackToTop();
+  backToTop.addEventListener('click', () => requestAnimationFrame(() => document.querySelector('#main-content').focus({ preventScroll: true })));
+}
+startDailyScripture();
 const countdown = document.querySelector('[data-countdown]');
 function updateLaunch() {
   if (launchPassed(siteConfig.launch)) {

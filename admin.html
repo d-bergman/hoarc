@@ -33,8 +33,8 @@
             aria-label="Healing of America Revival Center home"
             ><img
               src="assets/images/hoarc-horizontal-main.webp"
-              width="1000"
-              height="283"
+              width="1200"
+              height="324"
               alt=""
               class=""
               fetchpriority="high"
@@ -77,18 +77,18 @@
                 id="admin-email"
                 type="email"
                 autocomplete="username"
-                required
+                required=""
               /><label class="form-label" for="admin-password">Password</label
               ><input
                 id="admin-password"
                 class="form-control mb-3"
                 type="password"
                 autocomplete="current-password"
-                required
+                required=""
               /><button class="btn btn-primary" type="submit">Sign in</button>
             </form>
           </div>
-          <div id="admin-workspace" hidden>
+          <div id="admin-workspace" hidden="">
             <div class="d-flex flex-wrap justify-content-between gap-3 mb-4">
               <p id="admin-user" class="mb-0"></p>
               <button class="btn btn-outline-primary" id="admin-signout" type="button">
@@ -112,7 +112,7 @@
                       id="announcement-title"
                       name="title"
                       maxlength="120"
-                      required
+                      required=""
                     />
                   </div>
                   <div class="mb-3">
@@ -123,7 +123,7 @@
                       name="message"
                       rows="5"
                       maxlength="2000"
-                      required
+                      required=""
                     ></textarea>
                   </div>
                   <div class="row g-3 mb-3">
@@ -156,7 +156,7 @@
                         id="announcement-publish"
                         name="publishAt"
                         type="datetime-local"
-                        required
+                        required=""
                       />
                     </div>
                     <div class="col-sm-6">
@@ -166,7 +166,7 @@
                         id="announcement-expire"
                         name="expiresAt"
                         type="datetime-local"
-                        required
+                        required=""
                       />
                     </div>
                   </div>
@@ -197,7 +197,12 @@
                       id="announcement-preview-button"
                     >
                       Preview</button
-                    ><button class="btn btn-primary" type="submit" id="announcement-save" disabled>
+                    ><button
+                      class="btn btn-primary"
+                      type="submit"
+                      id="announcement-save"
+                      disabled=""
+                    >
                       Save reviewed announcement</button
                     ><button class="btn btn-link" type="button" id="announcement-reset">
                       Clear
@@ -215,21 +220,20 @@
         </div>
       </section>
     </main>
-    <div class="back-top text-center">
-      <a href="#main-content" class="back-top-link"
-        >Back to top <span aria-hidden="true">↑</span></a
-      >
-    </div>
+    <a
+      href="#main-content"
+      class="back-top-link"
+      data-back-to-top=""
+      hidden=""
+      aria-label="Back to top"
+      ><span aria-hidden="true">↑</span></a
+    >
     <footer class="site-footer">
       <div class="container-xl">
         <div class="row g-4 pb-4">
           <div class="col-lg-5">
             <p class="footer-name">Healing of America Revival Center</p>
-            <p class="small opacity-75">A division of Aquila Christian Ministries.</p>
-            <p class="small mb-0">
-              Sunday worship · 10:00 a.m.–12:00 p.m.<br />Meeting at Algonquin Historic Village
-              Hall<br />First floor · 2 S Main St, Algonquin, IL 60102
-            </p>
+            <p class="opacity-75">A division of Aquila Christian Ministries.</p>
           </div>
           <div class="col-sm-6 col-lg-3">
             <p class="footer-label">Connect with us</p>
@@ -254,7 +258,9 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <path d="M15 22V13h3l1-4h-4V6c0-1 .5-2 2-2h2V1h-3c-4 0-6 2-6 6v2H7v4h3v9" /></svg
+                  <path
+                    d="M15 22V13h3l1-4h-4V6c0-1 .5-2 2-2h2V1h-3c-4 0-6 2-6 6v2H7v4h3v9"
+                  ></path></svg
                 ><span class="visually-hidden">Facebook</span
                 ><span class="visually-hidden"> (opens in a new tab)</span></a
               ><a
@@ -274,9 +280,9 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="18" cy="6" r=".5" /></svg
+                  <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <circle cx="18" cy="6" r=".5"></circle></svg
                 ><span class="visually-hidden">Instagram</span
                 ><span class="visually-hidden"> (opens in a new tab)</span></a
               ><a
@@ -296,8 +302,8 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <rect x="2" y="5" width="20" height="14" rx="4" />
-                  <path d="m10 9 5 3-5 3Z" /></svg
+                  <rect x="2" y="5" width="20" height="14" rx="4"></rect>
+                  <path d="m10 9 5 3-5 3Z"></path></svg
                 ><span class="visually-hidden">YouTube</span
                 ><span class="visually-hidden"> (opens in a new tab)</span></a
               >
@@ -306,8 +312,7 @@
           <div class="col-sm-6 col-lg-4">
             <p class="footer-label">You are welcome here</p>
             <div class="d-flex flex-wrap gap-3">
-              <a href="service.html">Plan your visit</a><a href="about.html">About us</a
-              ><a href="resources.html">Resources</a><a href="faq.html">FAQ</a>
+              <a href="service.html">Plan your visit</a>
             </div>
             <div class="d-flex gap-3 mt-3">
               <a
@@ -327,12 +332,15 @@
           </div>
         </div>
         <div class="footer-base d-flex flex-column flex-md-row justify-content-between gap-3">
-          <small
-            >© <span data-current-year>2026</span> Healing of America Revival Center. All rights
-            reserved.</small
-          >
-          <div class="d-flex flex-wrap gap-3 small">
-            <a href="privacy.html">Privacy Policy</a><a href="accessibility.html">Accessibility</a
+          <p class="footer-copyright">
+            © <span data-current-year=""></span> Healing of America Revival Center. All rights
+            reserved.
+          </p>
+          <div class="footer-utilities">
+            <a href="privacy.html">Privacy Policy</a
+            ><span class="footer-separator" aria-hidden="true">|</span
+            ><a href="accessibility.html">Accessibility</a
+            ><span class="footer-separator" aria-hidden="true">|</span
             ><a href="sitemap.html">Site Map</a>
           </div>
         </div>

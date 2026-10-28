@@ -1,3 +1,5 @@
+> October 27 update: 17 editable HTML pages now include the local Statement of Faith. The daily CEV endpoint was verified live; requested-change checks cover global footer/font controls, Central-midnight refresh, caching and provider failure. The service deadline is December 6 at 10 am Central.
+
 > October 26 update: the site now uses directly editable root HTML files and tracked assets. The page generator was removed; packaging checks also verify source HTML is copied byte-for-byte. Browser and integration checks are rerun for the explicit .html routes.
 
 # Verification record

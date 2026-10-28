@@ -62,7 +62,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   await page.screenshot({ path: 'artifacts/screenshots/bio-mobile.png', fullPage: true });
   await page.keyboard.press('Escape');
-  const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
   const fallback = await noJs.newPage();
   await fallback.goto(`${base}/about.html`);
   await fallback.locator('[data-bio-trigger="darren"]').click();
@@ -73,7 +73,7 @@ try {
   assert.equal(await fallback.locator('details').nth(1).getAttribute('open'), '');
   report.interactions.push('Without JavaScript: biography links and FAQ answers remain usable.');
   await noJs.close();
-  await page.clock.install({ time: new Date('2026-11-29T16:00:01Z') });
+  await page.clock.install({ time: new Date('2026-12-06T16:00:01Z') });
   await page.goto(`${base}/`);
   assert.match(await page.locator('[data-countdown]').textContent(), /Join us Sundays/);
   assert.equal(await page.locator('[data-countdown-part]').count(), 0);

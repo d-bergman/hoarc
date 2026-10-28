@@ -30,7 +30,7 @@ for (const person of people) {
   for (const line of person.bio) assert.ok(about.includes(line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/\s+/g, ' ')), `Missing complete bio text: ${person.name}`);
   assert.ok(about.includes(`about/${person.id}.html`));
 }
-assert.equal(siteConfig.launch, '2026-11-29T10:00:00-06:00');
+assert.equal(siteConfig.launch, '2026-12-06T10:00:00-06:00');
 const hosting = JSON.parse(await readFile('firebase.json', 'utf8')).hosting;
 assert.ok(hosting.headers.some(rule => rule.headers.some(h => h.key === 'Content-Security-Policy' && h.value.includes("object-src 'none'"))));
 assert.ok(hosting.headers.some(rule => rule.source.includes('admin') && rule.headers.some(h => h.key === 'X-Robots-Tag' && h.value.includes('noindex'))));

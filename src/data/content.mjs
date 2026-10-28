@@ -14,12 +14,12 @@ export const faithArticles = [
 ];
 
 export const faqs = [
-  ['When are worship services?', 'We meet Sundays from 10:00 a.m. to 12:00 p.m. Our first service is Sunday, November 29, 2026.'],
+  ['When are worship services?', 'We meet Sundays from 10 am to 12 pm Our first service is Sunday, December 6, 2026.'],
   ['Where does the church meet?', 'We meet on the first floor of Algonquin Historic Village Hall, 2 S Main St, Algonquin, IL 60102.'],
   ['What can I expect during a service?', 'Services include praise and worship, testimonies, a sermon, and an opportunity for individual prayer at the end. Most services run approximately 1½ to 2 hours.'],
   ['What should I wear?', 'Casual to casual-formal attire is welcome. Modest dress is requested.'],
-  ['Is parking available?', 'Yes. Parking is available at the building, according to our pastor.'],
-  ['Is the venue wheelchair accessible?', 'Our pastor reports that the building is wheelchair accessible, and services are held on the first floor. Please contact us if you need entrance or accessibility assistance; the specific entrance and route will be verified before launch.'],
+  ['Is parking available?', 'Yes'],
+  ['Is the venue wheelchair accessible?', 'The building is wheelchair accessible, and services are held on the first floor. Please contact us if you need entrance or accessibility assistance; the specific entrance and route will be verified before launch.'],
   ['Are children welcome?', 'Children are welcome. Childcare and children’s ministry programs are planned for the future, but are not yet available as regular services.'],
   ['Will there be prayer meetings or Bible studies?', 'Additional gatherings are planned, with details expected to be posted in 2027.'],
   ['What does the church believe?', 'Healing of America Revival Center follows the same statement of faith as Aquila Christian Ministries. Read What We Believe on our About page.'],

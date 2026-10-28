@@ -4,7 +4,7 @@ All listed image files were supplied in `Z:\Church Website`. Copies were resized
 
 | Supplied source | Site use | Rights/approval status |
 | --- | --- | --- |
-| `Logo/hoarc-horizontal-main.png` | White navbar; social image composition | Approved design reference; ownership/publication confirmation per plan |
+| `Downloads/hoarc-horizontal-main.png` (October 27 replacement) | White navbar; social image composition | Approved design reference; ownership/publication confirmation per plan |
 | `Logo/hoarc-favicon.png` | Browser icon | Supplied church mark; confirm publication permission |
 | `Hero Images/homepage-hero.png` | Home hero, social image | Supplied; confirm creator/license and publication permission |
 | `Hero Images/service-hero.png` | Service hero | Supplied; confirm creator/license and publication permission |
@@ -24,6 +24,8 @@ All listed image files were supplied in `Z:\Church Website`. Copies were resized
 
 The six full-page mockups are visual references, not images embedded in the website. Their example portraits, venue photographs, map screenshots, and sample verse quotations were not extracted for publication.
 
-The location panel, small SVG line icons and Polaris Frequency visual are implemented in original HTML/CSS/SVG. The social image combines only supplied logo/hero assets. System fonts require no webfont redistribution. Bootstrap 5.3.2 is MIT licensed; its license is retained in `assets/licenses/bootstrap.txt` and copied to the built site. Firebase and other dependency notices remain with their packages/bundles.
+The location panel, small SVG line icons and Polaris Frequency visual are implemented in original HTML/CSS/SVG. The social image combines only supplied logo/hero assets. Noto Sans and Noto Serif Latin variable webfonts are self-hosted in assets/fonts with their SIL Open Font License notices in assets/licenses. Bootstrap 5.3.2 is MIT licensed; its license is retained in `assets/licenses/bootstrap.txt` and copied to the built site. Firebase and other dependency notices remain with their packages/bundles.
 
 Record the actual rights-holder, permission/license evidence, permitted uses, attribution, and approval date before publishing. No author-approved book descriptions or full external doctrinal text have been invented.
+
+October 27 update: the owner supplied and requested the replacement horizontal logo; its original PNG is retained in assets/images and its WebP/social derivatives were refreshed. Original vector mountain silhouettes were added for the footer. Noto fonts were downloaded through Google Fonts and their exact font license notices retained. The Statement of Faith text was imported from the official ministry page at the owner’s explicit request. Daily Scripture is delivered by Bible Gateway’s official CEV endpoint with provider attribution.

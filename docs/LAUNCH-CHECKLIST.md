@@ -12,8 +12,8 @@ As of October 22, 2026, the website is built locally for review. The original pl
 - Confirm publication permission for every supplied asset, portrait subject, and biography. Approve exact personal-history and credential wording, including Larry’s currently flagged naturopathy credentials.
 - Confirm the independent ministry name: the supplied biographies say Polaris Frequency Studio; the Resources channel is Polaris Frequency. Both are preserved as supplied.
 - Approve book summaries; supplied cover assets are present but rights confirmation remains open in the plan.
-- Approve transfer of the full 13 Articles of Faith from the official Aquila source. The current page offers the complete external statement by link.
-- Confirm CEV passage quotation rights, required attribution, and the chosen Bible Gateway daily widget/feed terms. The current site offers links without republishing passages.
+- Review the local Statement of Faith, vision, and wholistic-health text imported from the official Aquila page at the owner’s October 27 request.
+- Verify the live official Bible Gateway CEV daily-verse integration and attribution on the deployed site, including its third-party script policy and service fallback.
 - Confirm the specific first-floor room, entrance, parking directions, and accessible route/restrooms on-site. Contact mockup’s `15 N. Main St.` is not used; the plan’s `2 S Main St` is used consistently.
 
 ## Deployment and real-service checks
@@ -29,7 +29,7 @@ As of October 22, 2026, the website is built locally for review. The original pl
 - Validate with NVDA + Chrome and VoiceOver + Safari. Test actual Android and iOS devices, text enlargement, reduced motion, touch targets, keyboard focus, and sticky-header offsets. Automated checks are not a substitute for these.
 - Measure mobile Core Web Vitals on deployed Hosting; check HTTPS/security headers and CSP with actual Firebase services.
 - Verify Search Console and Bing Webmaster Tools, sitemap and indexing after publication.
-- Rebuild/review at launch so date-specific initial HTML remains appropriate. The client countdown automatically becomes evergreen on November 29 at 10 a.m. Central.
+- Rebuild/review at launch so date-specific initial HTML remains appropriate. The client countdown automatically becomes evergreen on December 6 at 10 a.m. Central.
 
 ## Deliberately deferred
 

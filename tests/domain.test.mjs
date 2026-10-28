@@ -4,8 +4,8 @@ import { countdownParts, launchPassed } from '../src/lib/countdown.mjs';
 import { validateAnnouncement, publicProjection, activeAnnouncements, safeActionUrl } from '../functions/lib/announcements.mjs';
 import { validateContact, contactMail } from '../functions/lib/contact.mjs';
 
-const now = Date.parse('2026-11-28T16:00:00Z');
-const deadline = '2026-11-29T10:00:00-06:00';
+const now = Date.parse('2026-12-05T16:00:00Z');
+const deadline = '2026-12-06T10:00:00-06:00';
 const record = { title: 'Sunday update', message: 'Meet on the first floor.', priority: 'normal', enabled: true, publishAt: now - 1000, expiresAt: now + 60000, actionLabel: '', actionUrl: '' };
 
 test('countdown uses the Central Time launch instant and never goes negative', () => {

@@ -22,7 +22,7 @@ The browser-tested RTDB admin is at `admin.html`, but the real administrator acc
 1. Choose the administrator account and final domain/Hosting setup.
 2. Choose the contact email provider and sender identity, then verify actual Gmail delivery and Reply-To.
 3. Review and approve biographies/credentials, asset publication rights, book descriptions, and venue entrance/access details.
-4. Approve the full Statement of Faith transfer and Scripture widget/CEV quotation permissions. Current pages use official external links.
+4. Review the newly imported local Statement of Faith and the live daily CEV Scripture integration requested on October 27.
 5. Review the visual build, then deploy and complete real-service/accessibility checks.
 
 The contact page currently offers direct email/phone links. The working form code is present but remains disabled until its real delivery path is tested. Announcements are disabled on the default public build until the real project’s rules/functions/admin are configured. No database access was opened on the live project.

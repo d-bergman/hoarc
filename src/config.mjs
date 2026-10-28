@@ -12,7 +12,7 @@ export const firebaseConfig = {
 export const siteConfig = {
   name: 'Healing of America Revival Center',
   shortName: 'HOARC',
-  launch: '2026-11-29T10:00:00-06:00',
+  launch: '2026-12-06T10:00:00-06:00',
   timezone: 'America/Chicago',
   email: 'hoarc.church@gmail.com',
   phone: '815-406-9100',
