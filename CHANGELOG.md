@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 — October 29, 2026
+
+- Changed internal links, canonical metadata and sitemap URLs to the owner-specified extension-free GitHub Pages routes, retaining editable HTML files and legacy URLs.
+- Grouped FAQ disclosures so opening one closes the previous one, with native no-JavaScript support and a JavaScript fallback.
+- Added required first/last name fields to the visible contact form, strengthened server validation and added verified Firebase App Check protection alongside the existing honeypot and rate limits.
+- Prepared secure church Gmail SMTP setup with fixed church recipient and visitor Reply-To. Sending remains disabled pending credentials, App Check registration and backend deployment.
+- Removed the requested historical paragraph from Events. Added clean-route, FAQ and contact regression coverage.
+
 ## 0.4.0 — October 29, 2026
 
 - Applied the V3 replacement logo and homepage hero from the NAS; refreshed social artwork.

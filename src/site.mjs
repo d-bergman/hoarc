@@ -14,6 +14,11 @@ if (backToTop) {
   backToTop.addEventListener('click', () => requestAnimationFrame(() => document.querySelector('#main-content').focus({ preventScroll: true })));
 }
 startDailyScripture();
+// Native details grouping also works without JS; keep older browsers exclusive.
+const faqItems = [...document.querySelectorAll('details.faq-item')];
+faqItems.forEach(item => item.addEventListener('toggle', () => {
+  if (item.open) faqItems.forEach(other => { if (other !== item) other.open = false; });
+}));
 const countdown = document.querySelector('[data-countdown]');
 function updateLaunch() {
   if (launchPassed(siteConfig.launch)) {
@@ -53,19 +58,23 @@ new ResizeObserver(() => document.documentElement.style.scrollPaddingTop = `${he
 if (settings.announcementsEnabled && document.querySelector('[data-announcements]')) import('./announcements.mjs').then(({ watchAnnouncements }) => watchAnnouncements()).catch(() => {});
 const form = document.querySelector('#contact-form');
 if (form) {
-  form.hidden = !settings.contactEnabled;
+  const ready = settings.contactEnabled && (settings.appCheckSiteKey || settings.emulators);
+  form.querySelector('[type="submit"]').disabled = !ready;
   const fallback = document.querySelector('[data-contact-fallback]');
-  if (fallback) fallback.hidden = settings.contactEnabled;
+  if (fallback) fallback.hidden = ready;
 }
 if (form) form.addEventListener('submit', async event => {
   event.preventDefault();
+  if (!settings.contactEnabled) return;
   if (!form.reportValidity()) return;
   const status = document.querySelector('#contact-status');
   const button = form.querySelector('[type="submit"]');
   const values = Object.fromEntries(new FormData(form)); values.consent = form.elements.consent.checked;
   status.textContent = 'Sending your message…'; button.disabled = true;
   try {
-    const response = await fetch(settings.contactEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values), signal: AbortSignal.timeout(20000) });
+    const { contactToken } = await import('./contact-security.mjs');
+    const token = await contactToken(settings);
+    const response = await fetch(settings.contactEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Firebase-AppCheck': token }, body: JSON.stringify(values), signal: AbortSignal.timeout(20000) });
     const result = await response.json();
     if (!response.ok || result.ok !== true) throw new Error(result.message || 'We could not send your message. Please email or call us.');
     status.textContent = 'Your message has been accepted for delivery. Thank you for getting in touch.';

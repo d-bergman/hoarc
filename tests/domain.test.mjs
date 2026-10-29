@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { countdownParts, launchPassed } from '../src/lib/countdown.mjs';
 import { validateAnnouncement, publicProjection, activeAnnouncements, safeActionUrl } from '../functions/lib/announcements.mjs';
-import { validateContact, contactMail } from '../functions/lib/contact.mjs';
+import { validateContact, contactMail, verifyContactApp } from '../functions/lib/contact.mjs';
 
 const now = Date.parse('2026-12-05T16:00:00Z');
 const deadline = '2026-12-06T10:00:00-06:00';
@@ -33,10 +33,10 @@ test('announcement validation rejects oversized, invalid, and unpaired action fi
   assert.equal(validateAnnouncement(record).title, record.title);
   for (const change of [{ title: '' }, { message: 'x'.repeat(2001) }, { priority: 'fake' }, { enabled: 'yes' }, { expiresAt: record.publishAt }, { publishAt: NaN }, { actionLabel: 'Click' }, { actionLabel: 'Click', actionUrl: 'javascript:alert(1)' }]) assert.throws(() => validateAnnouncement({ ...record, ...change }));
 });
-const visitor = { name: 'A Visitor', email: 'visitor@example.com', phone: '', subject: 'First visit', message: 'Where is the entrance?', consent: true, website: '' };
+const visitor = { firstName: 'A', lastName: 'Visitor', email: 'visitor@example.com', phone: '', subject: 'First visit', message: 'Where is the entrance?', consent: true, website: '' };
 test('contact validation rejects email header injection and requires consent', () => {
   assert.equal(validateContact(visitor).email, visitor.email);
-  for (const change of [{ email: 'a@example.com\r\nBcc: x@example.com' }, { name: 'Name\nBcc: x' }, { subject: 'Hello\r\nBcc: x' }, { consent: false }, { message: 'x'.repeat(5001) }, { website: 'bot.example' }]) assert.throws(() => validateContact({ ...visitor, ...change }));
+  for (const change of [{ email: 'a@example.com\r\nBcc: x@example.com' }, { firstName: 'Name\nBcc: x' }, { lastName: '' }, { firstName: '' }, { subject: 'Hello\r\nBcc: x' }, { consent: false }, { message: 'x'.repeat(5001) }, { website: 'bot.example' }]) assert.throws(() => validateContact({ ...visitor, ...change }));
 });
 test('mail always goes to the church with an authenticated From and visitor Reply-To', () => {
   const mail = contactMail(validateContact(visitor), 'web@church.example', new Date(now));
@@ -45,4 +45,14 @@ test('mail always goes to the church with an authenticated From and visitor Repl
   assert.equal(mail.replyTo.address, visitor.email);
   assert.match(mail.subject, /^HOARC Website Inquiry:/);
   assert.match(mail.text, /Where is the entrance/);
+});
+
+test('contact rejects missing, invalid and other-app tokens before accepting a verified church app', async () => {
+  await assert.rejects(verifyContactApp('', () => { throw new Error('Must not run.'); }));
+  await assert.rejects(verifyContactApp('invalid', async () => { throw new Error('Invalid signature.'); }));
+  await assert.rejects(verifyContactApp('wrong-app', async () => ({ app_id: 'another-app' })));
+  await verifyContactApp('verified', async token => {
+    assert.equal(token, 'verified');
+    return { app_id: '1:752902391273:web:ea9707b444ddc72c6d3778' };
+  });
 });

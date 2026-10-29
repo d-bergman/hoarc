@@ -35,9 +35,9 @@ for (const [name, engine] of [['Chromium', chromium], ['WebKit', webkit]]) {
     assert.ok((await page.title()).includes('Events & Revival Recordings'));
     assert.match(await page.locator('meta[name="description"]').getAttribute('content'), /Watch past Healing of America/);
     const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
-    assert.equal(canonical, 'https://hoarc-a5afd.web.app/events.html');
+    assert.equal(canonical, 'https://d-bergman.github.io/hoarc/events');
     assert.ok((await readFile('sitemap.xml', 'utf8')).includes(canonical));
-    assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'), 'https://hoarc-a5afd.web.app/assets/images/social-share.jpg');
+    assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'), 'https://d-bergman.github.io/hoarc/assets/images/social-share.jpg');
     assert.equal(await page.locator('h1').count(), 1);
     const a11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
     assert.deepEqual(a11y.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => n.failureSummary) })), []);
@@ -72,9 +72,9 @@ for (const [name, engine] of [['Chromium', chromium], ['WebKit', webkit]]) {
     if (name === 'Chromium') {
       for (const file of files) {
         await page.goto(`${base}/${file}`);
-        assert.equal(await page.locator('nav a[href$="events.html"]').count(), 1, file);
-        assert.equal(await page.locator('nav a[href$="faq.html"]').count(), 0, file);
-        assert.equal(await page.locator('footer a[href$="faq.html"]').count(), 1, file);
+        assert.equal(await page.locator('nav a[href$="events"]').count(), 1, file);
+        assert.equal(await page.locator('nav a[href$="faq"]').count(), 0, file);
+        assert.equal(await page.locator('footer a[href$="faq"]').count(), 1, file);
         assert.equal(await page.locator('footer a').filter({ hasText: /^Plan your visit$/ }).count(), 0, file);
         assert.match(await page.locator('.navbar-brand img').getAttribute('src'), /hoarc-horizontal-main-new.webp$/);
       }

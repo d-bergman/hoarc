@@ -20,7 +20,7 @@ The design follows the supplied church plan and concepts. Firebase **Realtime Da
 
 ## Edit and preview
 
-Edit page content in the HTML files. Edit the theme in [assets/site.css](assets/site.css). Images are in [assets/images/](assets/images/), and ready-to-serve JavaScript is in `assets/`. Page links and assets use relative paths, so the website also works beneath a static host's subdirectory.
+Edit page content in the HTML files. Edit the theme in [assets/site.css](assets/site.css). Images are in [assets/images/](assets/images/), and ready-to-serve JavaScript is in `assets/`. Public links and assets use the owner-selected `/hoarc` project prefix.
 
 Serve this folder with any static web server, VS Code Live Server, or the included Node server:
 
@@ -29,7 +29,7 @@ cd 'C:\Users\Darren\Documents\Git Archive\hoarc'
 npm run dev
 ```
 
-Open `http://127.0.0.1:4173`. **There is no install or build step for previewing the committed website.** Reload after editing HTML/CSS. Use an HTTP server for JavaScript modules rather than opening pages with `file://`.
+Open `http://127.0.0.1:4173/hoarc`. **There is no install or build step for previewing the committed website.** Reload after editing HTML/CSS. The supplied preview server supports the same clean project routes as GitHub Pages; avoid opening pages with `file://`.
 
 Shared navigation and footer markup is present in each HTML page. If changing it, apply the change to all pages, including the biography pages. Full biographies appear in the About modals and their individual pages; keep those copies consistent.
 
@@ -46,7 +46,9 @@ npm run build
 
 This bundles JavaScript into `assets/` and copies the existing HTML, CSS, images, and scripts into ignored `dist/` for Firebase Hosting. **It never regenerates or overwrites the source HTML or CSS.** Commit updated JavaScript assets with their source changes. Ordinary HTML/CSS edits require only a refresh; run the packaging command before deploying to Firebase.
 
-Metadata, canonical/social URLs, robots directives and the sitemap are now editable static files as well. They are deliberately set for staging, with no indexing. Events uses the configured project's default Firebase Hosting origin in its canonical/social URLs and sitemap entry. Before launch, update metadata and the full sitemap for the approved domain. `site.settings.json` controls announcements and contact-form availability; it does not rewrite page content or indexing settings.
+Metadata, canonical/social URLs, robots directives and the sitemap are editable static files. The owner-specified public origin is `https://d-bergman.github.io/hoarc`, with routes such as `/hoarc/service` and `/hoarc/about/larry`. GitHub Pages serves existing HTML files through these clean paths. Staging `noindex` remains until launch approval. `site.settings.json` controls announcements and contact-form availability; it does not rewrite page content or indexing settings.
+
+The Contact form is implemented with first/last name, email validation, Firebase App Check, honeypot and rate limits. Follow [church Gmail setup](docs/CONTACT-SETUP.md) to configure secrets, register App Check and enable delivery. Until then the form is visible with sending disabled and a working direct-email fallback.
 
 The Events archive uses semantic HTML cards and local thumbnails. See [Events maintenance](docs/EVENTS.md) for the exact process to add a seventh recording or a future upcoming-events section.
 
@@ -70,9 +72,9 @@ Project: `hoarc-a5afd`. The supplied public web configuration is in `src/config.
 
 ## Contact form
 
-The contact form is ordinary HTML in `contact.html`. It is hidden by default while direct email/phone links remain visible. When `contactEnabled` is enabled and JavaScript assets are rebuilt, the form becomes available. Without JavaScript, direct contact links remain usable.
+The contact form is ordinary HTML in `contact.html`. It is visible with sending disabled until both frontend/server settings and App Check registration are ready. Direct email/phone links remain usable, including without JavaScript.
 
-The SMTP provider/sending identity is still to be selected and approved. The included server adapter uses authenticated TLS SMTP, sends only to `hoarc.church@gmail.com`, and sets the visitor's validated email as Reply-To. It does not save a duplicate message in RTDB.
+The owner selected church Gmail with Firebase. The server adapter uses authenticated TLS Gmail SMTP, sends only to `hoarc.church@gmail.com`, and sets the visitor's validated email as Reply-To. It does not save a duplicate message in RTDB. Credentials and App Check setup are still required; see [setup instructions](docs/CONTACT-SETUP.md).
 
 | Function setting | Kind | Value |
 | --- | --- | --- |

@@ -1,5 +1,6 @@
 {
   "contactEnabled": false,
-  "contactEndpoint": "/api/contact/",
-  "announcementsEnabled": false
+  "contactEndpoint": "https://us-central1-hoarc-a5afd.cloudfunctions.net/contact",
+  "announcementsEnabled": false,
+  "appCheckSiteKey": ""
 }

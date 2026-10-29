@@ -28,7 +28,7 @@ try {
   await hosted.close();
   report.tests.push('Firebase Hosting emulator serves the staging page with working modal scripts. Custom-header verification remains a deployed check on Windows.');
   const settings = JSON.parse(await readFile('site.settings.json', 'utf8'));
-  await writeFile(settingsPath, JSON.stringify({ ...settings, contactEnabled: true, announcementsEnabled: true, emulators: true }));
+  await writeFile(settingsPath, JSON.stringify({ ...settings, contactEnabled: true, contactEndpoint: "/api/contact/", announcementsEnabled: true, emulators: true }));
   execFileSync(process.execPath, ['scripts/build.mjs'], { env: { ...process.env, HOARC_SETTINGS: settingsPath }, stdio: 'inherit' });
   const email = `browser-admin-${Date.now()}@example.com`; const password = 'Emulator-Only-Password!';
   const user = await auth.createUser({ email, password }); await auth.setCustomUserClaims(user.uid, { admin: true });
@@ -74,7 +74,7 @@ try {
   let submitted;
   await contact.route('**/api/contact/', route => { submitted = route.request().postDataJSON(); return route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }); });
   async function fillForm() {
-    await contact.locator('#contact-name').fill('Test Visitor'); await contact.locator('#contact-email').fill('visitor@example.com');
+    await contact.locator('#contact-first-name').fill('Test'); await contact.locator('#contact-last-name').fill('Visitor'); await contact.locator('#contact-email').fill('visitor@example.com');
     await contact.locator('#contact-subject').fill('First visit'); await contact.locator('#contact-message').fill('Which entrance should I use?');
     await contact.locator('#contact-consent').check();
   }

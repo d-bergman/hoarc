@@ -66,7 +66,7 @@ try {
   const fallback = await noJs.newPage();
   await fallback.goto(`${base}/about.html`);
   await fallback.locator('[data-bio-trigger="darren"]').click();
-  assert.ok(fallback.url().endsWith('/about/darren.html'));
+  assert.ok(fallback.url().endsWith('/hoarc/about/darren'));
   assert.ok((await fallback.locator('main').textContent()).includes('Above all, Darren desires'));
   await fallback.goto(`${base}/faq.html`);
   await fallback.locator('summary').nth(1).click();

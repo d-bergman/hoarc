@@ -1,6 +1,6 @@
 # Maintaining the Events archive
 
-The public archive is ordinary source HTML in `events.html`. Its six cards are available without JavaScript. No CMS, database, player embeds or rendering framework is needed. The default canonical/social origin is the configured Firebase project’s `https://hoarc-a5afd.web.app`; replace this origin in the Events metadata, structured data and `sitemap.xml` when the custom domain is approved. The existing staging `noindex,nofollow` policy remains in place.
+The public archive is ordinary source HTML in `events.html`, served at `https://d-bergman.github.io/hoarc/events`. Its six cards are available without JavaScript. No CMS, database, player embeds or rendering framework is needed. Canonical/social URLs and sitemap use the owner-selected GitHub Pages origin. The existing staging `noindex,nofollow` policy remains in place.
 
 ## Add a seventh recording
 
@@ -19,6 +19,6 @@ When confirmed information exists, insert a separate semantic section above the 
 
 ## Shared layout and assets
 
-The header/footer are editable markup repeated on every HTML page. Keep the Events navigation item and FAQ footer link consistent across root and `about/` pages; biography pages use `../` links. Events has the active navigation state only on `events.html`. FAQ keeps its URL, metadata and contextual links.
+The header/footer are editable markup repeated on every HTML page. Keep the Events navigation item and FAQ footer link consistent across root and `about/` pages; all public links use the `/hoarc` project prefix and omit `.html`. Events has the active navigation state only on the Events page. Legacy `.html` files remain accessible.
 
 Supplied NAS assets used by V3: `Logo/hoarc-horizontal-main-new.png`, `Hero Images/homepage-hero-new.png` and `Hero Images/events-hero.png`. The document’s logo spelling differed; this is the matching new file actually present. The original replacement logo is retained locally, and hero/logo derivatives are committed. Normal builds need no NAS connection. The existing asset-preparation script now retains these selections during regeneration. Thumbnails are maintained independently with the helper above.

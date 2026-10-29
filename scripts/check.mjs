@@ -18,8 +18,9 @@ for (const file of htmlFiles) {
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const url = new URL(match[1], `https://local.test/${path.relative('dist', file).replaceAll('\\', '/')}`);
     if (url.origin !== 'https://local.test') continue;
-    const target = path.join('dist', decodeURIComponent(url.pathname));
-    const resolved = url.pathname.endsWith('/') ? path.join(target, 'index.html') : target;
+    const localPath = decodeURIComponent(url.pathname).replace(/^\/hoarc(?:\/|$)/, '/');
+    const target = path.join('dist', localPath);
+    const resolved = localPath === '/' ? path.join(target, 'index.html') : !path.extname(localPath) ? target + '.html' : target;
     assert.ok(await stat(resolved).catch(() => false), `${file}: missing local target ${match[1]}`);
   }
   for (const match of html.matchAll(/class="([^"]*)"/g)) for (const name of match[1].split(/\s+/)) assert.ok(!/(__|--|_)/.test(name), `Disallowed custom class: ${name}`);
@@ -28,7 +29,7 @@ const about = (await readFile('dist/about.html', 'utf8')).replace(/\s+/g, ' ');
 const people = JSON.parse(await readFile('src/data/people.json', 'utf8'));
 for (const person of people) {
   for (const line of person.bio) assert.ok(about.includes(line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/\s+/g, ' ')), `Missing complete bio text: ${person.name}`);
-  assert.ok(about.includes(`about/${person.id}.html`));
+  assert.ok(about.includes(`/hoarc/about/${person.id}`));
 }
 assert.equal(siteConfig.launch, '2026-12-06T10:00:00-06:00');
 const hosting = JSON.parse(await readFile('firebase.json', 'utf8')).hosting;

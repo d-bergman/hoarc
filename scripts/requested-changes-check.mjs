@@ -21,7 +21,7 @@ try {
     assert.equal(await page.locator('.nav-link').first().evaluate(el => getComputedStyle(el).fontSize), '20px');
     assert.match(await page.locator('body').evaluate(el => getComputedStyle(el).fontFamily), /Noto Sans/);
     assert.match(await page.locator('h1').evaluate(el => getComputedStyle(el).fontFamily), /Noto Serif/);
-    assert.equal(await page.locator('nav a[href$="statement-of-faith.html"], footer a[href$="statement-of-faith.html"]').count(), 0);
+    assert.equal(await page.locator('nav a[href$="statement-of-faith"], footer a[href$="statement-of-faith"]').count(), 0);
     report.sitewidePages++;
   }
   report.checks.push('All source pages: footer simplification, live year, gold separators, fonts, 1.25rem navigation and normal-link spacing.');
@@ -47,7 +47,7 @@ try {
   report.checks.push('Invitation placement, FAQ parking wording, navigation hover border, and scroll-triggered circular back-to-top behavior.');
   await page.goto('http://127.0.0.1:4173/about.html');
   await page.getByRole('link', { name: 'Read the full statement of faith' }).click();
-  assert.ok(page.url().endsWith('/statement-of-faith.html'));
+  assert.ok(page.url().endsWith('/statement-of-faith'));
   const faithText = await page.locator('.statement-of-faith').textContent();
   for (let n = 1; n <= 13; n++) assert.match(faithText, new RegExp(`\\b${n}\\.`));
   assert.match(faithText, /VISION/); assert.match(faithText, /BELIEF STATEMENTS FOR WHOLISTIC HEALTH/);

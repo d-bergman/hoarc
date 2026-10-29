@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase-admin/app';
 import { getDatabase } from 'firebase-admin/database';
+import { getAppCheck } from 'firebase-admin/app-check';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { defineBoolean, defineSecret, defineString } from 'firebase-functions/params';
 import { createHmac } from 'node:crypto';
 import nodemailer from 'nodemailer';
 import { MAX_ANNOUNCEMENTS, validateAnnouncement, publicProjection } from './lib/announcements.mjs';
-import { validateContact, contactMail } from './lib/contact.mjs';
+import { validateContact, contactMail, verifyContactApp } from './lib/contact.mjs';
 import { updateAnnouncementState } from './lib/state.mjs';
 
 const emulatorProject = process.env.FIREBASE_DATABASE_EMULATOR_HOST ? (process.env.GCLOUD_PROJECT || 'demo-hoarc') : null;
@@ -64,11 +65,16 @@ export const contact = onRequest({ region: 'us-central1', maxInstances: 3, timeo
   const origins = allowedOrigins.value().split(',').map(s => s.trim()).filter(Boolean);
   if (!origin || !origins.includes(origin)) { res.status(403).json({ ok: false, message: 'This request is not allowed.' }); return; }
   res.set('Access-Control-Allow-Origin', origin); res.set('Vary', 'Origin');
-  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS'); res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS'); res.set('Access-Control-Allow-Headers', 'Content-Type, X-Firebase-AppCheck');
   if (req.method === 'OPTIONS') { res.status(204).send(''); return; }
   if (req.method !== 'POST') { res.set('Allow', 'POST, OPTIONS').status(405).json({ ok: false, message: 'Use the contact form to send a message.' }); return; }
   if (!contactEnabled.value()) { res.status(503).json({ ok: false, message: 'Please email hoarc.church@gmail.com or call 815-406-9100.' }); return; }
   if (!req.is('application/json') || (req.rawBody?.length || 0) > 16384) { res.status(400).json({ ok: false, message: 'Please check the form and message length.' }); return; }
+  try {
+    await verifyContactApp(req.get('X-Firebase-AppCheck'), token => getAppCheck().verifyToken(token));
+  } catch {
+    res.status(403).json({ ok: false, message: 'We could not verify this submission. Please try again or email the church directly.' }); return;
+  }
   let data;
   try { data = validateContact(req.body); }
   catch (error) { res.status(400).json({ ok: false, message: error.message }); return; }
