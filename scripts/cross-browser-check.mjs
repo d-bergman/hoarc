@@ -11,7 +11,7 @@ for (const [name, engine] of [['Chromium', chromium], ['WebKit', webkit]]) {
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     for (const width of [320, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/contact.html', '/faq.html']) {
+      for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/events.html', '/contact.html', '/faq.html']) {
         await page.goto(`http://127.0.0.1:4173${route}`);
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${name} ${route}: ${width}px overflow`);
       }
@@ -36,8 +36,8 @@ for (const [name, engine] of [['Chromium', chromium], ['WebKit', webkit]]) {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${name}: enlarged text overflow`);
     await page.screenshot({ path: `artifacts/screenshots/faq-${name.toLowerCase()}-large-text.png`, fullPage: true });
     assert.deepEqual(errors, []);
-    report.push({ engine: name, viewportWidths: [320, 390, 768, 1024, 1440], pages: 6, modalScrollAndClose: true, faqTouch: true, textEnlargement: '200% at 320px', errors });
+    report.push({ engine: name, viewportWidths: [320, 390, 768, 1024, 1440], pages: 7, modalScrollAndClose: true, faqTouch: true, textEnlargement: '200% at 320px', errors });
   } finally { await browser.close(); }
 }
 await writeFile('artifacts/cross-browser-report.json', JSON.stringify(report, null, 2));
-console.log('Cross-browser checks passed: Chromium and WebKit, six pages at five widths, modal scrolling, touch FAQ, and enlarged text.');
+console.log('Cross-browser checks passed: Chromium and WebKit, seven pages at five widths, modal scrolling, touch FAQ, and enlarged text.');

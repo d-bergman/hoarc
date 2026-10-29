@@ -88,5 +88,20 @@
     "width": 1920,
     "height": 768,
     "src": "/assets/images/services-hero-new.webp"
+  },
+  "hoarc-horizontal-main-new": {
+    "width": 1200,
+    "height": 322,
+    "src": "/assets/images/hoarc-horizontal-main-new.webp"
+  },
+  "homepage-hero-new": {
+    "width": 1915,
+    "height": 821,
+    "src": "/assets/images/homepage-hero-new.webp"
+  },
+  "events-hero": {
+    "width": 1920,
+    "height": 768,
+    "src": "/assets/images/events-hero.webp"
   }
 }

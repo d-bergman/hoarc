@@ -14,7 +14,7 @@ try {
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.locator('.site-footer .small, .site-footer small').count(), 0, `${file}: no small footer text`);
     assert.equal(await page.locator('.site-footer [data-current-year]').textContent(), String(new Date().getFullYear()));
-    assert.equal(await page.locator('.site-footer a').filter({ hasText: /^(About us|Resources|FAQ)$/ }).count(), 0);
+    assert.equal(await page.locator('.site-footer a').filter({ hasText: /^(About us|Resources)$/ }).count(), 0);
     assert.equal(await page.locator('.footer-separator').count(), 2);
     assert.equal(await page.locator('.site-footer').getByText(/Sunday worship/).count(), 0);
     assert.equal(await page.locator('a:not(.btn) span.ms-2').count(), 0);
@@ -24,7 +24,7 @@ try {
     assert.equal(await page.locator('nav a[href$="statement-of-faith.html"], footer a[href$="statement-of-faith.html"]').count(), 0);
     report.sitewidePages++;
   }
-  report.checks.push('All 17 pages: footer simplification, live year, gold separators, fonts, 1.25rem navigation and normal-link spacing.');
+  report.checks.push('All source pages: footer simplification, live year, gold separators, fonts, 1.25rem navigation and normal-link spacing.');
   for (const file of ['about.html', 'resources.html', 'faq.html']) {
     await page.goto(`http://127.0.0.1:4173/${file}`); assert.equal(await page.locator('.invitation').count(), 0);
   }

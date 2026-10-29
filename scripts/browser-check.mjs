@@ -12,7 +12,7 @@ try {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/contact.html', '/faq.html', '/privacy.html', '/accessibility.html', '/admin.html']) {
+  for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/events.html', '/contact.html', '/faq.html', '/privacy.html', '/accessibility.html', '/admin.html']) {
     const response = await page.goto(`${base}${route}`);
     assert.equal(response.status(), 200);
     await page.waitForLoadState('networkidle');
@@ -40,7 +40,7 @@ try {
   assert.equal(await page.locator('details').nth(1).getAttribute('open'), '');
   report.interactions.push('FAQ works with the keyboard.');
   await page.setViewportSize({ width: 320, height: 740 });
-  for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/contact.html', '/faq.html', '/admin.html']) {
+  for (const route of ['/', '/service.html', '/about.html', '/resources.html', '/events.html', '/contact.html', '/faq.html', '/admin.html']) {
     await page.goto(`${base}${route}`);
     await page.waitForLoadState('networkidle');
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);

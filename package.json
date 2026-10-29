@@ -1,6 +1,6 @@
 {
   "name": "hoarc",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Healing of America Revival Center website",
@@ -18,7 +18,8 @@
     "check": "npm test && npm run build && node scripts/check.mjs",
     "test:browser": "node scripts/browser-check.mjs",
     "test:changes": "node scripts/requested-changes-check.mjs",
-    "test:cross-browser": "node scripts/cross-browser-check.mjs"
+    "test:cross-browser": "node scripts/cross-browser-check.mjs",
+    "test:events": "node scripts/events-check.mjs"
   },
   "dependencies": {
     "bootstrap": "5.3.2",

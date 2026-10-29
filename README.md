@@ -12,6 +12,7 @@ This is a conventional static website. **The HTML pages are directly editable fi
 | FAQ | [faq.html](faq.html) |
 | Announcement administrator | [admin.html](admin.html) |
 | Privacy and accessibility | [privacy.html](privacy.html), [accessibility.html](accessibility.html) |
+| Events and recordings | [events.html](events.html) |
 | Site map and not found | [sitemap.html](sitemap.html), [404.html](404.html) |
 | Individual biographies | [about/](about/) |
 
@@ -45,7 +46,9 @@ npm run build
 
 This bundles JavaScript into `assets/` and copies the existing HTML, CSS, images, and scripts into ignored `dist/` for Firebase Hosting. **It never regenerates or overwrites the source HTML or CSS.** Commit updated JavaScript assets with their source changes. Ordinary HTML/CSS edits require only a refresh; run the packaging command before deploying to Firebase.
 
-Metadata, canonical/social URLs, robots directives and the sitemap are now editable static files as well. They are deliberately set for staging, with no indexing and no invented final domain. Before launch, update them for the approved domain. `site.settings.json` controls announcements and contact-form availability; it does not rewrite page content or indexing settings.
+Metadata, canonical/social URLs, robots directives and the sitemap are now editable static files as well. They are deliberately set for staging, with no indexing. Events uses the configured project's default Firebase Hosting origin in its canonical/social URLs and sitemap entry. Before launch, update metadata and the full sitemap for the approved domain. `site.settings.json` controls announcements and contact-form availability; it does not rewrite page content or indexing settings.
+
+The Events archive uses semantic HTML cards and local thumbnails. See [Events maintenance](docs/EVENTS.md) for the exact process to add a seventh recording or a future upcoming-events section.
 
 ## Firebase
 

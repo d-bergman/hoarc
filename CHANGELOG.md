@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — October 29, 2026
+
+- Applied the V3 replacement logo and homepage hero from the NAS; refreshed social artwork.
+- Added a static Events archive with six historical recordings, genuine locally optimized YouTube thumbnails, accessible links and newest-first ordering.
+- Added Events to primary navigation and replaced the footer visit link with FAQ on all 18 pages; preserved the FAQ page and contextual links.
+- Matched Service/About hero sizes across responsive breakpoints while retaining the existing page treatment.
+- Added Events metadata, CollectionPage/ItemList, default Firebase canonical/sitemap entry, thumbnail maintenance helper and a documented seventh-card workflow.
+- Extended accessibility, responsive, no-JavaScript and shared-navigation verification to cover Events.
+
 ## 0.3.1 — October 28, 2026
 
 - Applied the V2 footer layout across all 17 pages and moved invitations directly above the footer.
